@@ -17,8 +17,8 @@
 #import <React/RCTImageStoreManager.h>
 #import "RNCFileSystem.h"
 #import "RNCImageUtils.h"
-#if __has_include(<RCTImage/RCTImageUtils.h>)
-#import <RCTImage/RCTImageUtils.h>
+#if __has_include(<React/RCTImageUtils.h>)
+#import <React/RCTImageUtils.h>
 #else
 #import "RCTImageUtils.h"
 #endif
@@ -77,7 +77,7 @@ RCT_EXPORT_METHOD(cropImage:(NSURLRequest *)imageRequest
     // Store image
     NSString *path = NULL;
     NSData *imageData = NULL;
-    
+
     if([extension isEqualToString:@"png"]){
       imageData = UIImagePNGRepresentation(croppedImage);
       path = [RNCFileSystem generatePathInDirectory:[[RNCFileSystem cacheDirectoryPath] stringByAppendingPathComponent:@"ReactNative_cropped_image_"] withExtension:@".png"];
@@ -90,12 +90,12 @@ RCT_EXPORT_METHOD(cropImage:(NSURLRequest *)imageRequest
 
     NSError *writeError;
     NSString *uri = [RNCImageUtils writeImage:imageData toPath:path error:&writeError];
-      
+
     if (writeError != nil) {
       reject(@(writeError.code).stringValue, writeError.description, writeError);
       return;
     }
-      
+
     resolve(uri);
   }];
 }
